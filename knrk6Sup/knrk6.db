@@ -17,3 +17,70 @@ record(bo, "$(P)DISABLE")
     field(ZNAM, "COMMS ENABLED")
     field(ONAM, "COMMS DISABLED")
 }
+
+
+record(ai, "$(P)POSITION")
+{
+    field(DESC, "Valve position")
+    field (DTYP, "stream")
+    field(SCAN, "1 second")
+    field(VAL, "1")
+    field(EGU, "")
+    
+    field(INP, "@knrk6.proto get_position() $(PORT)")
+    
+    field(SIML, "$(P)SIM")
+    field(SIOL, "$(P)SIM:POSITION")
+    field(SDIS, "$(P)DISABLE")
+    info(INTEREST, "HIGH")
+    info(archive, "VAL")
+    info(alarm, "KNRK6")
+}
+
+record(ao, "$(P)POSITION:SP")
+{
+    field(DESC, "Set valve position")
+    field (DTYP, "stream")
+    field(VAL, "1")
+    field(DRVL, "1")
+    field(DRVH, "6")
+    field(EGU, "")
+    
+    field(OUT, "@knrk6.proto set_position() $(PORT)")
+    
+    field(SIML, "$(P)SIM")
+    field(SIOL, "$(P)SIM:POSITION:SP")
+    field(SDIS, "$(P)DISABLE")
+    info(INTEREST, "HIGH")
+}
+
+alias("$(P)POSITION", "$(P)POSITION:SP:RBV")
+
+record(ai, "$(P)VALVE:TYPE")
+{
+    field(DESC, "Valve type (6/12/16)")
+    field(DTYP, "stream")
+    field(SCAN, "1 second")
+    
+    field(INP, "@knrk6.proto get_valve() $(PORT)")
+    
+    field(SIML, "$(P)SIM")
+    field(SIOL, "$(P)SIM:VALVE:TYPE")
+    field(SDIS, "$(P)DISABLE")
+}
+
+## SIMULATION RECORDS
+
+record(ai, "$(P)SIM:POSITION")
+{
+	field(SCAN, "Passive")
+	field(DTYP, "Soft Channel")
+}
+alias("$(P)SIM:POSITION", "$(P)SIM:POSITION:SP")
+alias("$(P)SIM:POSITION", "$(P)SIM:POSITION:SP:RBV")
+
+record(ai, "$(P)SIM:VALVE:TYPE")
+{
+    field(DTYP, "Soft Channel")
+    field(SCAN, "Passive")
+}
