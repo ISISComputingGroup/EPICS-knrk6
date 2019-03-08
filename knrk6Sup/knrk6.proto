@@ -14,3 +14,7 @@ get_valve {
     out "t";
     in "VALVE %i";
 }
+
+readError {
+    in "E%d";
+}

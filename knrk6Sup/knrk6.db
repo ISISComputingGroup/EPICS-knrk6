@@ -67,6 +67,32 @@ record(ai, "$(P)VALVE:TYPE")
     field(SIML, "$(P)SIM")
     field(SIOL, "$(P)SIM:VALVE:TYPE")
     field(SDIS, "$(P)DISABLE")
+    info(INTEREST, "MEDIUM")
+}
+
+record(mbbi, "$(P)ERROR")
+{
+    field(DESC, "Input error return")
+	field(DTYP, "stream")
+	field(SCAN, "I/O Intr")
+    field(VAL, "7")
+
+	field(INP, "@knrk6.proto readError $(PORT)")
+    
+    field(ZRST, "Valve not switched")
+    field(ONST, "Motor power excessive")
+    field(TWST, "Position change slow")
+    field(THST, "DIP 3&4 incorrect")
+    field(FRST, "Position 1 != Home")
+    field(FVST, "DIP 1&2 incorrect")
+    field(SXST, "EEPROM read error")
+    field(SVST, "None")
+    
+    
+    field(SIML, "$(P)SIM")
+    field(SIOL, "$(P)SIM:ERROR")
+    field(SDIS, "$(P)DISABLE")
+    info(INTEREST, "MEDIUM")
 }
 
 ## SIMULATION RECORDS
@@ -80,6 +106,12 @@ alias("$(P)SIM:POSITION", "$(P)SIM:POSITION:SP")
 alias("$(P)SIM:POSITION", "$(P)SIM:POSITION:SP:RBV")
 
 record(ai, "$(P)SIM:VALVE:TYPE")
+{
+    field(DTYP, "Soft Channel")
+    field(SCAN, "Passive")
+}
+
+record(mbbi, "$(P)SIM:ERROR")
 {
     field(DTYP, "Soft Channel")
     field(SCAN, "Passive")
