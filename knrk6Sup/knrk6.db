@@ -61,6 +61,7 @@ record(ai, "$(P)VALVE:TYPE")
     field(DESC, "Valve type (6/12/16)")
     field(DTYP, "stream")
     field(SCAN, "1 second")
+    field(EGU, "")
     
     field(INP, "@knrk6.proto get_valve() $(PORT)")
     
