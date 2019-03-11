@@ -17,3 +17,102 @@ record(bo, "$(P)DISABLE")
     field(ZNAM, "COMMS ENABLED")
     field(ONAM, "COMMS DISABLED")
 }
+
+
+record(ai, "$(P)POSITION")
+{
+    field(DESC, "Valve position")
+    field (DTYP, "stream")
+    field(SCAN, "1 second")
+    field(VAL, "1")
+    field(EGU, "")
+    
+    field(INP, "@knrk6.proto get_position() $(PORT)")
+    
+    field(SIML, "$(P)SIM")
+    field(SIOL, "$(P)SIM:POSITION")
+    field(SDIS, "$(P)DISABLE")
+    info(INTEREST, "HIGH")
+    info(archive, "VAL")
+    info(alarm, "KNRK6")
+}
+
+record(ao, "$(P)POSITION:SP")
+{
+    field(DESC, "Set valve position")
+    field (DTYP, "stream")
+    field(VAL, "1")
+    field(DRVL, "1")
+    field(DRVH, "6")
+    field(EGU, "")
+    
+    field(OUT, "@knrk6.proto set_position() $(PORT)")
+    
+    field(SIML, "$(P)SIM")
+    field(SIOL, "$(P)SIM:POSITION:SP")
+    field(SDIS, "$(P)DISABLE")
+    info(INTEREST, "HIGH")
+}
+
+alias("$(P)POSITION", "$(P)POSITION:SP:RBV")
+
+record(ai, "$(P)VALVE:TYPE")
+{
+    field(DESC, "Valve type (6/12/16)")
+    field(DTYP, "stream")
+    field(SCAN, "1 second")
+    
+    field(INP, "@knrk6.proto get_valve() $(PORT)")
+    
+    field(SIML, "$(P)SIM")
+    field(SIOL, "$(P)SIM:VALVE:TYPE")
+    field(SDIS, "$(P)DISABLE")
+    info(INTEREST, "MEDIUM")
+}
+
+record(mbbi, "$(P)ERROR")
+{
+    field(DESC, "Input error return")
+	field(DTYP, "stream")
+	field(SCAN, "I/O Intr")
+    field(VAL, "7")
+
+	field(INP, "@knrk6.proto readError $(PORT)")
+    
+    field(ZRST, "Valve not switched")
+    field(ONST, "Motor power excessive")
+    field(TWST, "Position change slow")
+    field(THST, "DIP 3&4 incorrect")
+    field(FRST, "Position 1 != Home")
+    field(FVST, "DIP 1&2 incorrect")
+    field(SXST, "EEPROM read error")
+    field(SVST, "None")
+    
+    
+    field(SIML, "$(P)SIM")
+    field(SIOL, "$(P)SIM:ERROR")
+    field(SDIS, "$(P)DISABLE")
+    info(INTEREST, "MEDIUM")
+}
+
+## SIMULATION RECORDS
+
+record(ai, "$(P)SIM:POSITION")
+{
+	field(SCAN, "Passive")
+	field(DTYP, "Soft Channel")
+}
+alias("$(P)SIM:POSITION", "$(P)SIM:POSITION:SP")
+alias("$(P)SIM:POSITION", "$(P)SIM:POSITION:SP:RBV")
+
+record(ai, "$(P)SIM:VALVE:TYPE")
+{
+    field(DTYP, "Soft Channel")
+    field(SCAN, "Passive")
+}
+
+record(mbbi, "$(P)SIM:ERROR")
+{
+    field(DTYP, "Soft Channel")
+    field(SCAN, "Passive")
+}

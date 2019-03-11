@@ -1,18 +1,20 @@
-getIDN {
-    out "*IDN?";
-    in "%\$1[^\r\n]";
-    ExtraInput = Ignore;
+Terminator = CR;
+
+get_position {
+    out "p";
+    in "%i"; 
 }
 
-cmd {
-    out "\$1";
+set_position {
+    out "%i";
+    in "OK"; 
 }
 
-setD {
-    out "\$1 %d";
+get_valve {
+    out "t";
+    in "VALVE %i";
 }
-getD {
-    out "\$1?";
-    in "%d";
-    ExtraInput = Ignore;
+
+readError {
+    in "E%d";
 }
