@@ -1,20 +1,17 @@
-from lewis.adapters.stream import StreamInterface, Cmd
-
+from lewis.adapters.stream import StreamInterface
 from lewis.utils.command_builder import CmdBuilder
 from lewis.utils.replies import conditional_reply
 
-if_connected = conditional_reply('connected')
-if_input_error = conditional_reply('input_correct', "E2")
+if_connected = conditional_reply("connected")
+if_input_error = conditional_reply("input_correct", "E2")
 
 
 class Knrk6StreamInterface(StreamInterface):
-
-    in_terminator = '\r'
-    out_terminator = '\r'
+    in_terminator = "\r"
+    out_terminator = "\r"
 
     # Commands that we expect via serial during normal operation
     def __init__(self):
-
         super(Knrk6StreamInterface, self).__init__()
         # Commands that we expect via serial during normal operation
         self.commands = {

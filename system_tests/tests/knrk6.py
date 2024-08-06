@@ -5,7 +5,6 @@ from utils.ioc_launcher import get_default_ioc_dir
 from utils.test_modes import TestModes
 from utils.testing import get_running_lewis_and_ioc, skip_if_recsim
 
-
 DEVICE_PREFIX = "KNRK6_01"
 DEVICE_NAME = "knrk6"
 
@@ -26,6 +25,7 @@ class Knrk6Tests(unittest.TestCase):
     """
     Tests for the Knrk6 IOC.
     """
+
     def setUp(self):
         self._lewis, self._ioc = get_running_lewis_and_ioc(DEVICE_NAME, DEVICE_PREFIX)
         self.ca = ChannelAccess(device_prefix=DEVICE_PREFIX)
@@ -46,11 +46,11 @@ class Knrk6Tests(unittest.TestCase):
 
     @skip_if_recsim("Unable to use lewis backdoor in RECSIM")
     def test_GIVEN_device_not_connected_WHEN_get_error_THEN_alarm(self):
-        self.ca.assert_that_pv_alarm_is('POSITION', ChannelAccess.Alarms.NONE, timeout=5)
+        self.ca.assert_that_pv_alarm_is("POSITION", ChannelAccess.Alarms.NONE, timeout=5)
         with self._lewis.backdoor_simulate_disconnected_device():
-            self.ca.assert_that_pv_alarm_is('POSITION', ChannelAccess.Alarms.INVALID, timeout=5)
+            self.ca.assert_that_pv_alarm_is("POSITION", ChannelAccess.Alarms.INVALID, timeout=5)
         # Assert alarms clear on reconnection
-        self.ca.assert_that_pv_alarm_is('POSITION', ChannelAccess.Alarms.NONE, timeout=5)
+        self.ca.assert_that_pv_alarm_is("POSITION", ChannelAccess.Alarms.NONE, timeout=5)
 
     @skip_if_recsim("Unable to use lewis backdoor in RECSIM")
     def test_GIVEN_an_input_error_WHEN_open_file_THEN_error_str_returned(self):
