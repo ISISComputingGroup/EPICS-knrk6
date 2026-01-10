@@ -1,4 +1,6 @@
 Terminator = CR;
+ReplyTimeout = 10000;
+LockTimeout = 20000;
 
 get_position {
     out "p";
