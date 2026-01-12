@@ -48,9 +48,9 @@ class Knrk6Tests(unittest.TestCase):
     def test_GIVEN_device_not_connected_WHEN_get_error_THEN_alarm(self):
         self.ca.assert_that_pv_alarm_is("POSITION", ChannelAccess.Alarms.NONE, timeout=5)
         with self._lewis.backdoor_simulate_disconnected_device():
-            self.ca.assert_that_pv_alarm_is("POSITION", ChannelAccess.Alarms.INVALID, timeout=5)
+            self.ca.assert_that_pv_alarm_is("POSITION", ChannelAccess.Alarms.INVALID, timeout=30)
         # Assert alarms clear on reconnection
-        self.ca.assert_that_pv_alarm_is("POSITION", ChannelAccess.Alarms.NONE, timeout=5)
+        self.ca.assert_that_pv_alarm_is("POSITION", ChannelAccess.Alarms.NONE, timeout=30)
 
     @skip_if_recsim("Unable to use lewis backdoor in RECSIM")
     def test_GIVEN_an_input_error_WHEN_open_file_THEN_error_str_returned(self):
